@@ -25,7 +25,7 @@ PIPE 是单向的，而且在 Windows 上没有实现，不如直接实现一个
 
 Linux 中，pipe 的 FD 视为文件句柄，能够使用 `read()/write()`，
 
-但是 Windows 中，不认这个，Windows 认为 `ReadFile/WriteFile`
+但是 Windows 中，不认这个，Windows 认 `ReadFile/WriteFile`
 
 才是操作文件的, `send()/recv()/WSASend()/WSARecv()` 是操作
 
