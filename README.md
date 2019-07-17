@@ -37,3 +37,18 @@ socketpair 只实现了 AF_UNIX ?
 ```
 socketpair(AF_UNIX, SOCK_STREAM, 0, xx) 
 ```
+
+
+## NON-BLOCK
+
+Linux 上的 PIPE 设置 non-block 与 SOCKET 方式与一致，
+
+但是在 Windows 则不一样了。
+
+_pipe() 出来的 不能设置。
+
+要 `CreatePipe()` -> `SetNamedPipeHandleState(PIPE_NOWAIT)` 
+
+-> `_open_osfhandle()`
+
+参考 [on blocking read on os.pipe on Windows] https://stackoverflow.com/questions/34504970/non-blocking-read-on-os-pipe-on-windows/34504971
