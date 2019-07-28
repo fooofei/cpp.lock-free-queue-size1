@@ -10,8 +10,10 @@
 #else
 #include <sys/select.h>
 #endif
-
+extern "C" {
 #include "conwait.h"
+};
+
 
 void thread_func1(void* arg)
 {

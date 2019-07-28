@@ -14,34 +14,31 @@ typedef int sock_t;
 #define closesocket close
 #endif
 
-struct conwait {
-    void* value01; // use atomic write
-    void* value10;
+struct conwait
+{
+    void *value01; // use atomic write
+    void *value10;
     sock_t pair[2];
 };
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
-    // 暂时不清楚 iOS 锁屏 会不会使句柄无效
+// 暂时不清楚 iOS 锁屏 会不会使句柄无效
+int conwait_init(struct conwait *cw);
 
-    int conwait_init(struct conwait* cw);
-    void conwait_term(struct conwait* cw);
+void conwait_term(struct conwait *cw);
 
-    sock_t conwait_up_read_sock(struct conwait* cw);
-    sock_t conwait_down_read_sock(struct conwait* cw);
 
-    void conwait_up_clear(struct conwait* cw);
-    void conwait_down_clear(struct conwait* cw);
+// one direction
+void conwait_up_write(struct conwait *cw, void *value);
+void *conwait_down_read(struct conwait *cw);
+void conwait_down_clear(struct conwait *cw);
+sock_t conwait_down_read_sock(struct conwait *cw);
 
-    void conwait_up_write(struct conwait* cw, void* value);
-    void conwait_down_write(struct conwait* cw, void* value);
 
-    void* conwait_up_read(struct conwait* cw);
-    void* conwait_down_read(struct conwait* cw);
-#ifdef __cplusplus
-}
-#endif
+void conwait_down_write(struct conwait *cw, void *value);
+void *conwait_up_read(struct conwait *cw);
+void conwait_up_clear(struct conwait *cw);
+sock_t conwait_up_read_sock(struct conwait *cw);
+
 
 #endif
